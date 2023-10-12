@@ -1,0 +1,19 @@
+{
+  "name": "clase-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "compile": "tsc main",
+    "start": "nodemon main.js",
+    "dev": "tsc-watch --onSuccess \"npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "tsc-watch": "^6.0.4"
+  }
+}

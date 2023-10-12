@@ -1,0 +1,30 @@
+npm init -y
+
+npm install -D nodemon
+
+npm install -D tsc-watch
+
+Pegar esto en scripts de package.json:
+
+ "scripts": {
+    "compile": "tsc main",
+    "start": "nodemon main.js",
+    "dev": "tsc-watch --onSuccess \"npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+tsc --init
+
+-----------------------------------------------------------------
+
+PARA EJECUTAR: (tambien compila a TYPESCRIPT)
+
+npm run dev 
+
+PARA EJECUTAR SOLAMENTE NODEMON:
+
+npm start / npm run start
+
+PARA COMPILAR TYPESCRIPT:
+
+npm run compile
