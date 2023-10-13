@@ -6,14 +6,14 @@ Propiedades:
 title: string
 price: number
 stock: number
-id: string
+id: number
 quantity: number
 
 Generar la class Cart 
 Propiedades:
 cart: Product[]
 id: number
-getCartById() recibe un id y devuelve el carrito buscado o null en caso de no existir 
+
 
 Generar una clase llamada CartManager:
 Propiedades: 
@@ -39,4 +39,75 @@ getTotalCart(cid) => recibira un cartId y devolvera un total numerico que sera l
 
 
 */
+class Product {
+    title: string
+    price: number
+    stock: number
+    id: string
+    quantity: number
+    constructor(title: string, price: number, stock: number, id: string) {
+        this.title = title,
+            this.price = price,
+            this.stock = stock,
+            this.id = id
+        this.quantity = 0
+    }
+}
+
+class Cart {
+    cart: Product[];
+    id: number;
+    constructor(id: number) {
+        this.cart = [];
+        this.id = id;
+    }
+}
+
+
+class CartManager {
+    carts: Cart[];
+    id: number;
+    constructor() {
+        this.carts = [];
+        this.id = 0;
+    }
+
+    createCart(): number {
+        const cart: Cart = new Cart(this.id++)
+        this.carts.push(cart)
+        return cart.id
+    }
+    getCartById(cid: number): undefined | Cart {
+        return this.carts.find((cart: Cart): boolean => cart.id == cid)
+    }
+    addProductCart(cartId: number, product: Product, quantity: number): void {
+        const cart = this.getCartById(cartId); //encuentra el carrito
+        if (cart) {
+            const existingProduct: Product | undefined = cart.cart.find(
+                (item: Product) => item.id === product.id
+            ); //
+            if (existingProduct) {
+                existingProduct.quantity += quantity;
+            } else {
+                product.quantity = quantity;
+                cart.cart.push(product);
+            }
+        }
+    }
+
+    getTotalCart(cartId: number): number {
+        const cart : Cart | undefined = this.getCartById(cartId);
+        if (cart) {
+            let result : number = 0
+
+            cart.cart.forEach(
+                (product: Product) :void =>{
+                    result += product.price * product.quantity
+                }
+            );
+            return result
+        }
+        return 0;
+    }
+}
 
