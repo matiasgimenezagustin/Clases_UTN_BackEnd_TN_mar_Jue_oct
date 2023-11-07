@@ -4,7 +4,10 @@ class ProductManager {
         this.path = path
     }
     async obtenerProductos () {
-        return await filesystem.promises.readFile(this.path,'utf-8');
+        let productos = await filesystem.promises.readFile(this.path,'utf-8');
+        let productosParseados = JSON.parse(productos)
+        return productosParseados
+
     }
     async agregarProducto(producto){
         try{
