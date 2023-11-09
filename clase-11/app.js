@@ -43,10 +43,18 @@ En caso de existir vamos a responder con un {ok: true, message: "Logged! :)"}
 En caso de no existir dicho usuario vamos a responder con un {ok: false, message: "User not found"}
 
 
+/api/register
+
+POST vamos a enviar un body con un email un password y un name. En caso de existir los 3 datos (sino se devolvera un {ok: false, message: 'datos no validos :("")}).
+Se debera comprobar si no existia previamente dicho email en caso de existir se devolvera un {ok: false, message: 'Email ya registrado'} 
+sino se devolvera un {ok: true, message: 'usuario registrado con exito'} ademas de guardar en el array de usuarios dicho usuario registrado.
+
+
+
 */
 
 app.post('/api/login', (req, res) =>{
-    console.log(req.body)
+    const {email, password } = req.body
     res.json({ok: true, message: 'Received'})
 })
 
