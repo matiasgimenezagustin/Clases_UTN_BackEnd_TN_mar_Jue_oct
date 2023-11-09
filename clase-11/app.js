@@ -45,17 +45,45 @@ En caso de no existir dicho usuario vamos a responder con un {ok: false, message
 
 /api/register
 
-POST vamos a enviar un body con un email un password y un name. En caso de existir los 3 datos (sino se devolvera un {ok: false, message: 'datos no validos :("")}).
-Se debera comprobar si no existia previamente dicho email en caso de existir se devolvera un {ok: false, message: 'Email ya registrado'} 
+POST 
+vamos a enviar un body con un email un password y un name. En caso de existir los 3 datos (sino se devolvera un {ok: false, message: 'datos no validos :("")}).
+
+Se debera comprobar si no existia previamente dicho email en caso de existir se devolvera un {ok: false, message: 'Email ya registrado'}
+
 sino se devolvera un {ok: true, message: 'usuario registrado con exito'} ademas de guardar en el array de usuarios dicho usuario registrado.
 
+/api/register
+
+PUT
+Vamos a recibir un body con 3 valores
+
+campo a modificar (que puede ser 'password' o 'name')
+nuevo valor (representa el valor por el que vamos a actualizar)
+email representa el email del usuario 
+
+POR EJEMPLO req.body = {"campo": "name", "value": "pepe", "email": "cosme@gmail.com"}
+
+Vamos a verificar que el usuario con ese email exista
+
+Si existe, vamos a verificar que el campo sea 'password' o 'name', sino se devolvera un {ok: false, message: "forbidden action"} 
+Sino:
+vamos a modificar el campo a modificar por el valor nuevo y vamos a devolver {ok: true, message: "usuario actualizado con exito", user: objetoModificado}
+
+Si no existe vamos a devolver un {ok: false, message: "User not found"}
 
 
 */
 
 app.post('/api/login', (req, res) =>{
     const {email, password } = req.body
-    res.json({ok: true, message: 'Received'})
+    const usuarioEncontrado = usuarios.find( usuario => usuario.email === email && usuario.password === password )
+    if(usuarioEncontrado){
+        res.json({ok:true, message: 'Logged! :)'})
+    }
+    else{
+        res.json({ok: false, message: 'User not Found'})
+    }
+    
 })
 
 
