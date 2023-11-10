@@ -8,9 +8,9 @@ const PORT = 3000
 app.use(express.json())
 
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
     console.log('se hizo un get')
-    res.json({ok: true})
+    res.json({ ok: true })
 })
 
 const usuarios = [
@@ -71,23 +71,60 @@ vamos a modificar el campo a modificar por el valor nuevo y vamos a devolver {ok
 
 Si no existe vamos a devolver un {ok: false, message: "User not found"}
 
+/api/register
+
+DELETE
+
+Vamos a recibir por param un email y por body el password 
+
+Verificamos si el usuario existe (con email)
+
+Si existe vamos a verificar si la contraseña para ese mail es correcta
+
+Si es correcta la contraseña vamos a eliminar el usuario y vamos a devolver un {ok: true, message: "usuario eliminado con exito"}
+
+Si no es correcta la contraseña se devolvera {ok: false, message: 'credenciales invalidas'}
+
+Si no existe el usuario con ese email se devolvera {ok: false, message: 'User not found'}
 
 */
 
-app.post('/api/login', (req, res) =>{
-    const {email, password } = req.body
-    const usuarioEncontrado = usuarios.find( usuario => usuario.email === email && usuario.password === password )
-    if(usuarioEncontrado){
-        res.json({ok:true, message: 'Logged! :)'})
+
+
+app.post('/api/login', (req, res) => {
+    const { email, password } = req.body
+    const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password)
+    if (usuarioEncontrado) {
+        res.json({ ok: true, message: 'Logged! :)' })
     }
-    else{
-        res.json({ok: false, message: 'User not Found'})
+    else {
+        res.json({ ok: false, message: 'User not Found' })
     }
-    
+
 })
 
 
+app.post("/api/register", (req, res) => {
+    const { email, password, name } = req.body;
+    //verifico si los dstos no estan vacios
+    if (!email || !password || !name) {
+        return res.json({ ok: false, message: "Datos no validos" });
 
-app.listen(PORT, () =>{
-    console.log('El servidor se esta escuhando en: http://localhost:'+PORT)
+    }
+
+    // Verifica si el mail ya esta registrado
+    const emailExists = usuarios.some((user) => user.email === email);
+    if (emailExists) {
+        return res.json({ ok: false, message: "Email registrado" });
+
+    }
+    // Agrego el nuevo usuario
+    usuarios.push({ email, password, name });
+    return res.json({ ok: true, message: "Usuario registrado exitosamente" });
+});
+
+
+
+app.listen(PORT, () => {
+    console.log('El servidor se esta escuhando en: http://localhost:' + PORT)
 })
