@@ -1,5 +1,6 @@
 const express = require('express')
-
+const loginRouter = require('./router/loginRouter')
+const { usuarios } = require('./manger/userManager')
 const app = express()
 
 const PORT = 3000
@@ -13,23 +14,9 @@ app.get('/', (req, res) => {
     res.json({ ok: true })
 })
 
-const usuarios = [
-    {
-        name: 'cosme',
-        email: 'cosme@gmail.com',
-        password: 'cosme123'
-    },
-    {
-        name: 'cosme1',
-        email: 'cosme1@gmail.com',
-        password: 'cosme1234'
-    },
-    {
-        name: 'cosme2',
-        email: 'cosme2@gmail.com',
-        password: 'cosme12345'
-    }
-]
+
+app.use('/api/login', loginRouter)
+
 
 /* 
 Registrar el endpoint 
@@ -93,18 +80,28 @@ Si no existe el usuario con ese email se devolvera {ok: false, message: 'User no
 */
 
 
+app.delete('/api/register/:email', (req, res)=> {
+    const {email} = req.params
+    const { password} = req.body
 
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body
-    const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password)
-    if (usuarioEncontrado) {
-        res.json({ ok: true, message: 'Logged! :)' })
+    const usuarioEliminar = usuarios.find(usuario => usuario.email === email)
+    if(!usuarioEliminar){
+        return res.json({ok:false, message: 'User not found'})
     }
-    else {
-        res.json({ ok: false, message: 'User not Found' })
+    const passwordCorrecta = usuarioEliminar.password === password
+    if(passwordCorrecta){
+        let posicionUsuario = usuarios.findIndex(usuario =>  usuario.email === usuarioEliminar.email)
+        usuarios.splice(posicionUsuario, 1)
+        return res.json({ok:true, message: 'Usuario eliminado con éxito'})
     }
-
+    else{
+        return res.json({ok:false, message: 'Credenciales invalidas'})
+    }
 })
+
+
+
+
 
 
 app.post("/api/register", (req, res) => {
@@ -149,14 +146,14 @@ app.put("/api/register", (req, res) => {
 });
 
 
-app.delete('/api/register/:email', (req, res) => {
+/* app.delete('/api/register/:email', (req, res) => {
     const { email } = req.params
     const { password } = req.body
     console.log({ email, password })
     res.json({ ok: true })
 })
 
-
+ */
 app.listen(PORT, () => {
     console.log('El servidor se esta escuhando en: http://localhost:' + PORT)
 })
