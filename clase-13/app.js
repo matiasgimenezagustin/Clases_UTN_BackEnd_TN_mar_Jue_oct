@@ -6,7 +6,8 @@ const app = express()
 /* Middlewere de cofiguracion de los archivos estaticos */
 
 app.use(express.static(__dirname + '/public'))
-
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 
 //Configurar el Motor de plantillas
@@ -14,10 +15,40 @@ app.use(express.static(__dirname + '/public'))
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/views')
 
+app.get('/', (req, res) =>{
+    let isAuth = false
+    if(isAuth){
+        return res.redirect('/home')
+    }
+    else{
+        return res.redirect('/login')
+    }
+})
+
+app.get('/login', (req, res) =>{
+    res.render('login')
+})
+app.get('/home', (req, res) =>{
+    res.render('home', {nombre: 'pepe'})
+})
+
 app.get('/pepe', (req, res) =>{
     res.render('pepe', {error: 'no estas Logueado'})
 })
 
+
+app.post('/login', (req, res) =>{
+    const {usuario} = req.body
+    console.log(usuario)
+    console.log('se envio un formulario')
+    res.redirect('/home')
+})
+
+
+/* 
+Crear el endpoint /home donde pasemos un nombre al home.hbs
+para poder mostrar en la pagina un h1 que diga 'Hola ' + nombre
+*/
 
 
 
