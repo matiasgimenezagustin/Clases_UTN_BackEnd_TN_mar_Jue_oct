@@ -48,6 +48,7 @@ app.post('/login', (req, res) =>{
 /* 
 Crear el endpoint /home donde pasemos un nombre al home.hbs
 para poder mostrar en la pagina un h1 que diga 'Hola ' + nombre
+A
 */
 
 
