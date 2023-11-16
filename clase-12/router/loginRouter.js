@@ -1,5 +1,5 @@
 const express = require('express')
-const { usuarios } = require('../manger/userManager')
+const { usuarios } = require('../manager/userManager')
 
 
 
@@ -10,10 +10,10 @@ loginRouter.post('/', (req, res) => {
     const { email, password } = req.body
     const usuarioEncontrado = usuarios.find(usuario => usuario.email === email && usuario.password === password)
     if (usuarioEncontrado) {
-        res.json({ ok: true, message: 'Logged! :)' })
+        res.status(200).json({ ok: true, message: 'Logged! :)' })
     }
     else {
-        res.json({ ok: false, message: 'User not Found' })
+        res.status(404).json({ ok: false, message: 'User not Found' })
     }
 
 })

@@ -1,6 +1,7 @@
 const express = require('express')
 const loginRouter = require('./router/loginRouter')
-const { usuarios } = require('./manger/userManager')
+const { usuarios } = require('./manager/userManager')
+const registerRouter = require('./router/registerRouter')
 const app = express()
 
 const PORT = 3000
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/login', loginRouter)
+
+app.use('/api/register', registerRouter)
 
 
 /* 
@@ -80,70 +83,6 @@ Si no existe el usuario con ese email se devolvera {ok: false, message: 'User no
 */
 
 
-app.delete('/api/register/:email', (req, res)=> {
-    const {email} = req.params
-    const { password} = req.body
-
-    const usuarioEliminar = usuarios.find(usuario => usuario.email === email)
-    if(!usuarioEliminar){
-        return res.json({ok:false, message: 'User not found'})
-    }
-    const passwordCorrecta = usuarioEliminar.password === password
-    if(passwordCorrecta){
-        let posicionUsuario = usuarios.findIndex(usuario =>  usuario.email === usuarioEliminar.email)
-        usuarios.splice(posicionUsuario, 1)
-        return res.json({ok:true, message: 'Usuario eliminado con éxito'})
-    }
-    else{
-        return res.json({ok:false, message: 'Credenciales invalidas'})
-    }
-})
-
-
-
-
-
-
-app.post("/api/register", (req, res) => {
-    const { email, password, name } = req.body;
-    //verifico si los dstos no estan vacios
-    if (!email || !password || !name) {
-        return res.json({ ok: false, message: "Datos no validos" });
-
-    }
-
-    // Verifica si el mail ya esta registrado
-    const emailExists = usuarios.some((user) => user.email === email);
-    if (emailExists) {
-        return res.json({ ok: false, message: "Email registrado" });
-
-    }
-    // Agrego el nuevo usuario
-    usuarios.push({ email, password, name });
-    return res.json({ ok: true, message: "Usuario registrado exitosamente" });
-});
-
-
-app.put("/api/register", (req, res) => {
-    const { campo, value, email } = req.body;
-    // Verifico si el usuario existe
-    const userExist = usuarios.findIndex((user) => user.email === email);
-    if (userExist === -1) {
-        res.json({ ok: false, message: "usuario no encontrado" });
-    }
-    // Verificar que el campo sea 'password' o 'name'
-    if (campo !== "password" && campo !== "name") {
-        res.json({ ok: false, message: "Forbidden action" });
-    }
-    // Actualizar el campo con el nuevo valor
-    usuarios[userExist][campo] = value;
-    // Devolver la respuesta con el usuario modificado
-    res.json({
-        ok: true,
-        message: "Usuario actualizado con éxito",
-        user: usuarios[userExist],
-    });
-});
 
 
 /* app.delete('/api/register/:email', (req, res) => {
@@ -157,3 +96,9 @@ app.put("/api/register", (req, res) => {
 app.listen(PORT, () => {
     console.log('El servidor se esta escuhando en: http://localhost:' + PORT)
 })
+
+
+/* 
+Todas las endpoints que apunten a /api/register deberan registrarse en el enrutador registerRouter usando express.Router()
+
+*/
