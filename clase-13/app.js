@@ -1,5 +1,6 @@
 const express = require('express')
 const hbs = require('hbs')
+const users = require('./data')
 const PORT = 9000
 const app = express()
 
@@ -39,7 +40,8 @@ app.get('/pepe', (req, res) =>{
 
 app.post('/login', (req, res) =>{
     const {usuario} = req.body
-    console.log(usuario)
+   
+    
     console.log('se envio un formulario')
     res.redirect('/home')
 })
