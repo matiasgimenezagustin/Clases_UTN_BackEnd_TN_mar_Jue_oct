@@ -20,7 +20,7 @@ app.set('views', __dirname + '/views')
 app.get('/', (req, res) =>{
     let isAuth = false
     if(isAuth){
-        return res.redirect('/home')
+        return res.status(300).redirect('/home')
     }
     else{
         return res.redirect('/login')
