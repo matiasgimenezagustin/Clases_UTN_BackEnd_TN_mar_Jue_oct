@@ -39,8 +39,8 @@ app.get('/pepe', (req, res) =>{
 
 
 app.post('/login', (req, res) =>{
-    const {usuario} = req.body
-   
+    const {email, contrasena} = req.body
+    
     
     console.log('se envio un formulario')
     res.redirect('/home')
