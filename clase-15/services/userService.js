@@ -49,3 +49,12 @@ name:
     email: 
     password:
 */
+
+
+{/* <label for='nombre'>
+    asdsadas
+</label>    
+
+<input id='nombre' name='name'/>
+
+{name: 'pepe'} */}
