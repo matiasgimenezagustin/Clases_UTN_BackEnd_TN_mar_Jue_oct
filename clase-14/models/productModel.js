@@ -25,12 +25,9 @@ const producto1 =  new Product(
 //Usamos el metodo save para guardar un producto
 /* producto1.save() */
 
-const getProducts = async () =>{
-    const products = await Product.find({})
-    console.log(products)
-} 
 
-getProducts()
+
+
 
 
 
