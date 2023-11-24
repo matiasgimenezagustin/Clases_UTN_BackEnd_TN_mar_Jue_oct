@@ -10,14 +10,14 @@
 
 <body>
     {{fecha}}
-    <form>
+    <form action="/register" method="POST">
         <div>
             <label for="name">Ingrese su nombre</label> <br />
             <input type="text" name="name" id="name">
         </div>
         <div>
             <label for="lastname">Ingrese su apellido</label> <br />
-            <input type="text" name="lastname" id="lastname">
+            <input type="text" name="lastname" id="lastname" required>
         </div>
         <div>
             <label for="age">Ingrese su edad</label> <br />
