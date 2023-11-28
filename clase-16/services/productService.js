@@ -5,11 +5,11 @@ const getProductsFromMongo = async () =>{
     return await Product.find({})
 } 
 
-const getProductById = async (pid) =>{
+const getProductByIdFromMongo = async (pid) =>{
     return await Product.find({_id: pid})
 }
 
-module.exports = {getProductsFromMongo, getProductById}
+module.exports = {getProductsFromMongo, getProductByIdFromMongo}
 
 
 

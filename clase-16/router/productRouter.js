@@ -1,11 +1,12 @@
 const express = require('express')
-const { getProducts } = require('../controllers/productController')
+const { getProducts, getProductById } = require('../controllers/productController')
 
 const productRouter = express.Router()
 
 
 
 productRouter.get('/', getProducts)
+productRouter.get('/:pid', getProductById)
 
 
 
