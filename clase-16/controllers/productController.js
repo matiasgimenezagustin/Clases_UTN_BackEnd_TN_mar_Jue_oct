@@ -8,6 +8,7 @@ const getProducts = async (req, res) =>{
 const getProductById = async (req, res) =>{
     const {pid} = req.params
     const result = await getProductByIdFromMongo(pid)
+    console.log(result)
     res.status(200).render('detail', {product: result})
 }
 

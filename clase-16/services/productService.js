@@ -6,7 +6,7 @@ const getProductsFromMongo = async () =>{
 } 
 
 const getProductByIdFromMongo = async (pid) =>{
-    return await Product.find({_id: pid})
+    return await Product.findOne({_id: pid})
 }
 
 module.exports = {getProductsFromMongo, getProductByIdFromMongo}

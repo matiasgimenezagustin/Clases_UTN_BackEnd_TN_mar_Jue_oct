@@ -116,3 +116,5 @@ Por ejemplo:
     password: 'pepe1234'
 }
 */
+
+/* NEXT.js / Remix / Nuxt.js == ssr = server side rendering */
