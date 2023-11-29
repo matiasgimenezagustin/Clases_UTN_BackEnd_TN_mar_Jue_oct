@@ -13,6 +13,28 @@ const getProductById = async (req, res) =>{
 }
 
 
+const updateProductById = async (req, res) => {
+  
+    console.log(req.body)
+    const {title, description, price, stock, id} = req.body
+    const newProduct = {title, description, price, stock} 
 
 
-module.exports = {getProducts, getProductById}
+    console.log('nuevoProducto: ', newProduct)
+    const result = await updateProductById(id, newProduct)
+    if(result){
+        res.status(200).render('detail', newProduct)
+    }
+}
+
+
+const editRequest  = async (req, res ) =>{
+    const {pid} = req.query
+    console.log('me consultaron para editar el producto con id: ' + pid)
+    const result = await getProductByIdFromMongo(pid)
+    res.status(200).render('detail', {product: result, editMode:true})
+}
+
+
+
+module.exports = {getProducts, getProductById, updateProductById, editRequest}

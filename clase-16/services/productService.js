@@ -9,7 +9,11 @@ const getProductByIdFromMongo = async (pid) =>{
     return await Product.findOne({_id: pid})
 }
 
-module.exports = {getProductsFromMongo, getProductByIdFromMongo}
+const updateProductoByIdFromMongo = async (pid, productoActualizado) => {
+    return await Product.findOneAndUpdate({id: pid}, productoActualizado, {new: true})
+}
+
+module.exports = {getProductsFromMongo, getProductByIdFromMongo, updateProductoByIdFromMongo}
 
 
 
