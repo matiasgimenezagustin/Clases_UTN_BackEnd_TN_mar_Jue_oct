@@ -29,11 +29,15 @@ const updateProductByIdFromMongo = async (pid, productoActualizado) => {
     }
 };
 
+const createProduct = async(newProduct) =>{
+    const product = new Product(newProduct)
+    return await product.save()
+}
 
 /* Crear funcion para crear un producto */
 
 
-module.exports = {getProductsFromMongo, getProductByIdFromMongo, updateProductByIdFromMongo}
+module.exports = {getProductsFromMongo, getProductByIdFromMongo, updateProductByIdFromMongo, createProduct}
 
 
 

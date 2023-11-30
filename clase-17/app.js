@@ -33,8 +33,8 @@ const callProducts = async () => {
     console.log(response) */
 }
 
-
-callProducts()
+/* 
+callProducts() */
 
 app.get('/home', (req, res) => {
     res.json({ ok: true })
@@ -75,7 +75,7 @@ const productRouter = require('./router/productRouter')
 
 app.use('/products', productRouter)
 
-
+/* app.get('/p', (req, res) => res.sendStatus(200)) */
 
 
 
