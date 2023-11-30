@@ -6,17 +6,31 @@ const getProductsFromMongo = async () =>{
 } 
 
 const getProductByIdFromMongo = async (pid) =>{
-    return await Product.findOne({_id: pid})
+    try {
+        const result  = await Product.findOne({_id: pid})
+
+        return result
+    }
+    catch(error){
+        console.error(error)
+        throw error
+    }
 }
+
+
+
 const updateProductByIdFromMongo = async (pid, productoActualizado) => {
     try {
         const updatedProduct = await Product.findOneAndUpdate({ _id: pid }, productoActualizado, { new: true });
         return updatedProduct;
     } catch (error) {
         console.error('Error al actualizar el producto:', error);
-        throw error; // Puedes manejar el error según tus necesidades
+        throw error;
     }
 };
+
+
+/* Crear funcion para crear un producto */
 
 
 module.exports = {getProductsFromMongo, getProductByIdFromMongo, updateProductByIdFromMongo}
