@@ -31,15 +31,19 @@
         <br/>
         <span>Stock:{{product.stock}}</span>
         <div>Creado en: {{product.createdAt}}</div>
-        <form action="/products/editRequest?pid={{product._id}}" method="post" >
-            <button type="submit" >
-                Editar
+        {{#if isAdmin}}
+            <form action="/products/editRequest?pid={{product._id}}" method="post" >
+                <button type="submit" >
+                    Editar
+                </button>
+            </form>
+            <button>
+                Eliminar
             </button>
-        </form>
-    
-        <button>
-            Eliminar
-        </button>
+            {{else}}
+            <button>Comprar</button>
+        {{/if}}
+        
     {{/if}}
     
     <hr/>

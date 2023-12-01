@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const hbs = require('hbs')
+const session = require('express-session')
 dotenv.config()
 
 
@@ -21,6 +22,12 @@ app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))//habilito que mi servidor pueda recibir formularios
 
+/* Configuracion de la sesion */
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+}))
 
 //Configurar el Motor de plantillas
 
@@ -63,9 +70,22 @@ app.post('/register', async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
+    if(email == process.env.ADMIN_MAIL && password === process.env.ADMIN_PASSWORD){/* Verificamos si es el administrador */
+        req.session.user = {
+            name: 'ADMIN',
+            lastName: 'ADMIN',
+            age: 99,
+            email: process.env.ADMIN_MAIL,
+        }
+        req.session.role = 'admin'
+        res.redirect('/products');
+    }
     const result = await loginUser(email, password);
     if (result.ok) {
-        res.json({ message: "Inicio de sesión exitoso", user: result.user });
+        req.session.user = result.user
+        req.session.role = 'user'
+        res.redirect('/products');
+        
     } else {
         res.render( "login", {error: result.error });
     }

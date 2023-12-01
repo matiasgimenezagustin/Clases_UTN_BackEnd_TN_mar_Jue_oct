@@ -2,7 +2,10 @@ const { getProductsFromMongo, getProductByIdFromMongo, updateProductByIdFromMong
 
 const getProducts = async (req, res) =>{
     const result = await getProductsFromMongo()
+    console.log(req.session.user)
+
     res.status(200).render('home',{products: result})
+
 }
 
 const getProductById = async (req, res) =>{
@@ -10,7 +13,7 @@ const getProductById = async (req, res) =>{
     const result = await getProductByIdFromMongo(pid)
     console.log(result)
     if(result){
-        res.status(200).render('detail', {product: result})
+        res.status(200).render('detail', {product: result, isAdmin: req.session.role == 'admin'})
     }
     else{
         res.status(404).render('errorView', {error: 'Product not found 404'})
