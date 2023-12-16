@@ -69,6 +69,14 @@ app.listen(PORT, () =>{
 
 
 /* 
+
+LIBRERIAS:
+
+Express
+nodemon
+dotenv
+
+
 => /api/products
 
 GET => 
