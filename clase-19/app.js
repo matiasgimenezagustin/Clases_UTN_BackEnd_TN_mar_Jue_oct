@@ -43,7 +43,7 @@ const mail = {
     `
 }
 
-mailerService.transport.sendMail(mail, (error, info) => {
+/* mailerService.transport.sendMail(mail, (error, info) => {
     if(error){
         console.log('No se pudo enviar el mensaje')
     }
@@ -51,14 +51,43 @@ mailerService.transport.sendMail(mail, (error, info) => {
         console.log('mensaje enviado con exito')
     }
 })
-
-console.log()
-
+ */
 
 
 
+app.get('/api/products/:pid', (req, res) =>{
 
+    const query = `SELECT * FROM productos WHERE Id = (?)`
+    const {pid} = req.params
+    db.query(query,[pid], (error, result)=>{
+        if(error){
+            res.status(500).json({message: 'error'})
+        }
+        else{
+            res.status(200).json({message: 'correcto', product: result[0]})
+        }
+    })
+})
 
+/* app.get('/fulano/:id', (req, res) =>{
+
+    const result = serviceProduct.getProductById()
+
+    const query = `SELECT * FROM productos WHERE Id = (?)`
+    db.query(query,[pid], (error, result)=>{
+        if(error){
+            res.status(500).json({message: 'error'})
+        }
+        else{
+            res.status(200).json({message: 'correcto', product: result[0]})
+        }
+    }) */
+
+  /*   if(!result){
+        res.status(500).json({message: 'Internal server error'})
+    }
+    res.status(200).json({product: product, status: 200, message: 'product found' }) */
+})
 
 
 app.listen(PORT, () =>{
@@ -75,6 +104,13 @@ LIBRERIAS:
 Express
 nodemon
 dotenv
+
+EJEMPLO DE RUTA: 
+
+app.get('/fulano', (req, res) =>{
+    res.status(200).json({product: product, status: 200, message: 'product found' })
+})
+
 
 
 => /api/products

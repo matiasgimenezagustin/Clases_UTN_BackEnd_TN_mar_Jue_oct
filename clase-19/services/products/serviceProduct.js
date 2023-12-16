@@ -6,6 +6,7 @@ const createProduct = ({nombre, precio, stock, descripcion}) =>{
     db.query(query, [nombre, precio, stock, descripcion], (error) =>{
         if(error){
             console.error(error)
+            return false
         }
         else{
             console.log('El producto se creo exitosamente')
