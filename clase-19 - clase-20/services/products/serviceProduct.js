@@ -1,4 +1,4 @@
-/* const db = require('../../config/dbConfig')
+const dbQueryAsync = require('../../config/dbConfig')
 
 
 const createProduct = ({nombre, precio, stock, descripcion}) =>{
@@ -58,7 +58,7 @@ const deleteProductById = (pid) => {
             console.log(`El producto fue eliminado exitosamente`)
         }
     })
-} */
+}
 
 
 /* getAllProducts(2) */
@@ -73,6 +73,6 @@ Hacer la funcion obtener producto por ID
 HACER LA FUNCION ELIMINAR POR ID 
 */
 
-/* module.exports = {createProduct, getAllProducts, deleteProductById, getProductById} */
+module.exports = {createProduct, getAllProducts, deleteProductById, getProductById}
 
 /* createProduct({nombre: 'teclado logitech', precio: 50, stock: 30, descripcion: 'teclado funcional mecanico'}) */

@@ -66,7 +66,13 @@ app.get('/api/products/:pid', async (req, res) =>{
         const query = `SELECT * FROM productos WHERE Id = (?)`
         const {pid} = req.params
         const result = await dbQueryAsync(query,[pid])
-        res.status(200).json({message: 'correcto', product: result[0]})
+        if(result.length == 0){
+            res.status(404).json({message: 'ERROR: Not found'})
+        }
+        else{
+            res.status(200).json({message: 'correcto', product: result[0]})
+        }
+       
     }
     catch(error){
         console.error(error)
