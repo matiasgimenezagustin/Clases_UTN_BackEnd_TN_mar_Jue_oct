@@ -3,12 +3,17 @@ const mysql = require('mysql')
 const dotenv = require('dotenv')
 const nodemailer = require('nodemailer')
 
+
 dotenv.config()
 
+const dbQueryAsync = require('./config/dbConfig')
 
 
-const db = require('./config/dbConfig')
-const serviceProduct = require('./services/products/serviceProduct')
+
+
+
+
+/* const serviceProduct = require('./services/products/serviceProduct') */
 
 const app = express()
 const PORT = process.env.PORT || 8081
@@ -55,18 +60,18 @@ const mail = {
 
 
 
-app.get('/api/products/:pid', (req, res) =>{
-
-    const query = `SELECT * FROM productos WHERE Id = (?)`
-    const {pid} = req.params
-    db.query(query,[pid], (error, result)=>{
-        if(error){
-            res.status(500).json({message: 'error'})
-        }
-        else{
-            res.status(200).json({message: 'correcto', product: result[0]})
-        }
-    })
+app.get('/api/products/:pid', async (req, res) =>{
+    try{
+        
+        const query = `SELECT * FROM productos WHERE Id = (?)`
+        const {pid} = req.params
+        const result = await dbQueryAsync(query,[pid])
+        res.status(200).json({message: 'correcto', product: result[0]})
+    }
+    catch(error){
+        console.error(error)
+        res.status(500).json({message: 'error'})
+    }
 })
 
 /* app.get('/fulano/:id', (req, res) =>{
@@ -87,8 +92,8 @@ app.get('/api/products/:pid', (req, res) =>{
         res.status(500).json({message: 'Internal server error'})
     }
     res.status(200).json({product: product, status: 200, message: 'product found' }) */
-})
-
+/* })
+ */
 
 app.listen(PORT, () =>{
     console.log('El servidor se esta escuhando en http://localhost:' + PORT + '/')

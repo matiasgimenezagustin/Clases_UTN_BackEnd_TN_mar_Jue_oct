@@ -1,5 +1,6 @@
 const mysql = require('mysql')
 const fs = require('fs')
+const util = require('util')
 
 console.log({
     host: process.env.DB_HOST,
@@ -28,6 +29,7 @@ db.connect((error) =>{
 })
 
 
+const dbQueryAsync = util.promisify(db.query).bind(db) // ahora queryAsync nos permite interactuar con mysql de manera asincrona
 
 
-module.exports = db
+module.exports = dbQueryAsync
