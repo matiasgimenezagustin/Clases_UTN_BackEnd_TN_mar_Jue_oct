@@ -40,7 +40,7 @@ const getProductById = async (pid) => {
     }
     catch(error){
         console.error(error)
-        return false
+        
     }        
 }
 /* callback hell */

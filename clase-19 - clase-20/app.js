@@ -3,12 +3,12 @@ const mysql = require('mysql')
 const dotenv = require('dotenv')
 const nodemailer = require('nodemailer')
 
-const productRouter = require('./router/productRouter')
 dotenv.config()
+
 
 const dbQueryAsync = require('./config/dbConfig')
 
-
+const productRouter = require('./router/productRouter')
 
 
 
@@ -61,7 +61,7 @@ const mail = {
  */
 
 
-
+/* 
 app.get('/api/products/:pid', async (req, res) =>{
     try{
         
@@ -80,7 +80,7 @@ app.get('/api/products/:pid', async (req, res) =>{
         console.error(error)
         res.status(500).json({message: 'error'})
     }
-})
+}) */
 
 /* app.get('/fulano/:id', (req, res) =>{
 
