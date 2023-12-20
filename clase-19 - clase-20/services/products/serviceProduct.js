@@ -1,42 +1,40 @@
 const dbQueryAsync = require('../../config/dbConfig')
 
 
-const createProduct = ({nombre, precio, stock, descripcion}) =>{
-    const query = 'INSERT INTO productos (nombre, precio, stock, descripcion) VALUES (?,?,?,?)'
-    db.query(query, [nombre, precio, stock, descripcion], (error) =>{
-        if(error){
-            console.error(error)
-            return false
-        }
-        else{
-            console.log('El producto se creo exitosamente')
-            
-        }
-    })
+const createProduct = async ({nombre, precio, stock, descripcion}) =>{
+    try{
+        const query = 'INSERT INTO productos (nombre, precio, stock, descripcion) VALUES (?,?,?,?)'
+        return await dbQueryAsync(query, [nombre, precio, stock, descripcion])
+    }
+    catch(error){
+        console.error('error')
+        return false
+    }
+    
 }
 
-const getAllProducts = (limit) => {
-    const query = 'SELECT * FROM productos'
-    db.query(query, (error, result) =>{
-        if(error){
-            console.error(error)
+const getAllProducts = async (limit) => {
+    try{
+        const query = 'SELECT * FROM productos'
+        const result = await dbQueryAsync(query)
+
+        if(limit){
+            return result.splice(limit )
         }
         else{
-            if(limit){
-                result.splice(limit )
-                console.log(result)
-            }
-            else{
-                console.log(result)
-            }
-
+            return result
         }
-    })
+        
+    }
+    catch(error){
+        console.error(error)
+    }
+  
 }
 
 const getProductById = (pid) => {
     const query = `SELECT * FROM productos WHERE Id = (?)`
-    db.query(query,[pid], (error, result)=>{
+    dbQueryAsync(query,[pid], (error, result)=>{
         if(error){
             console.error(error)
         }
@@ -50,7 +48,7 @@ const getProductById = (pid) => {
 
 const deleteProductById = (pid) => {
     const query = `DELETE FROM productos WHERE Id = (?)`
-    db.query(query,[pid], (error, result)=>{
+    dbQueryAsync(query,[pid], (error, result)=>{
         if(error){
             console.error(error)
         }
