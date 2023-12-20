@@ -3,7 +3,7 @@ const mysql = require('mysql')
 const dotenv = require('dotenv')
 const nodemailer = require('nodemailer')
 
-
+const productRouter = require('./router/productRouter')
 dotenv.config()
 
 const dbQueryAsync = require('./config/dbConfig')
@@ -20,6 +20,8 @@ const PORT = process.env.PORT || 8081
 
 
 app.use(express.static(__dirname + '/public'))
+
+app.use('/api/products/', productRouter)
 
 class MailingService {
     constructor(){

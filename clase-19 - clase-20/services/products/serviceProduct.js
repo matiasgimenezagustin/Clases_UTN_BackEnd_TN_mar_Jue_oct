@@ -43,18 +43,19 @@ const getProductById = async (pid) => {
         return false
     }        
 }
+/* callback hell */
 
-
-const deleteProductById = (pid) => {
-    const query = `DELETE FROM productos WHERE Id = (?)`
-    dbQueryAsync(query,[pid], (error, result)=>{
-        if(error){
-            console.error(error)
-        }
-        else{
-            console.log(`El producto fue eliminado exitosamente`)
-        }
-    })
+const deleteProductById = async (pid) => {
+    try{
+        const query = `DELETE FROM productos WHERE Id = (?)`
+        const result = await dbQueryAsync(query,[pid])
+        console.log(`El producto fue eliminado exitosamente`)
+        return result
+    }
+    catch(error){
+        console.error(error)
+        return false
+    } 
 }
 
 
