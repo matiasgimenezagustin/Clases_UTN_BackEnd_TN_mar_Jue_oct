@@ -32,17 +32,16 @@ const getAllProducts = async (limit) => {
   
 }
 
-const getProductById = (pid) => {
-    const query = `SELECT * FROM productos WHERE Id = (?)`
-    dbQueryAsync(query,[pid], (error, result)=>{
-        if(error){
-            console.error(error)
-        }
-        else{
-            console.log(result[0])
-
-        }
-    })
+const getProductById = async (pid) => {
+    try{
+        const query = `SELECT * FROM productos WHERE Id = (?)`
+        const result = await dbQueryAsync(query,[pid])
+        return result[0]
+    }
+    catch(error){
+        console.error(error)
+        return false
+    }        
 }
 
 
