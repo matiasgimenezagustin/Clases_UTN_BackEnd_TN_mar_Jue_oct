@@ -1,7 +1,6 @@
 const express = require('express')
 const mysql = require('mysql')
 const dotenv = require('dotenv')
-const nodemailer = require('nodemailer')
 
 dotenv.config()
 
@@ -18,37 +17,13 @@ const productRouter = require('./router/productRouter')
 const app = express()
 const PORT = process.env.PORT || 8081
 
-
+app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 
 app.use('/api/products/', productRouter)
 
-class MailingService {
-    constructor(){
-        this.transport = nodemailer.createTransport({
-            service: 'gmail',
-            auth:{
-                user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_PASSWORD
-            }
-        })
-    }
-}
-
-const mailerService = new MailingService()
 
 
-const mail = {
-    from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER,
-    subject: 'Soy un mail de prueba',
-    html: `
-    <h1 style='background-color: blue; color: white;'>Este es un mensaje de mail</h1>
-    <p>Soy un parrafo</p>
-    <img src='https://media.tycsports.com/files/2023/11/10/644568/messi-en-la-noche-de-oro_416x234.webp'/>
-    <a href='#'>Vista este sitio</a>
-    `
-}
 
 /* mailerService.transport.sendMail(mail, (error, info) => {
     if(error){

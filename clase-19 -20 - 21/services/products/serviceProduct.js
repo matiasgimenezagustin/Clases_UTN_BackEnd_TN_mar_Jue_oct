@@ -1,10 +1,21 @@
 const dbQueryAsync = require('../../config/dbConfig')
+const mailerService = require('../mailerService/mailerService')
+const { productCreatedTemplate } = require('../mailerService/templates/productMailTemplates')
 
 
 const createProduct = async ({nombre, precio, stock, descripcion}) =>{
     try{
         const query = 'INSERT INTO productos (nombre, precio, stock, descripcion) VALUES (?,?,?,?)'
-        return await dbQueryAsync(query, [nombre, precio, stock, descripcion])
+        const result = await dbQueryAsync(query, [nombre, precio, stock, descripcion])
+        mailerService.transport.sendMail(
+            productCreatedTemplate('', 'admin', {nombre, precio, stock, descripcion}), (error)=>{
+            if(error){
+                console.error('no se pudo enviar el mail')
+            }else{
+                console.log('Se envio el mail correctamente')
+            }
+        })
+        return result
     }
     catch(error){
         console.error('error')
@@ -49,7 +60,9 @@ const deleteProductById = async (pid) => {
     try{
         const query = `DELETE FROM productos WHERE Id = (?)`
         const result = await dbQueryAsync(query,[pid])
-        console.log(`El producto fue eliminado exitosamente`)
+        if(result.affectedRows == 0){
+            return 404
+        }
         return result
     }
     catch(error){
