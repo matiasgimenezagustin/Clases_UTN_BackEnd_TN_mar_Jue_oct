@@ -1,82 +1,49 @@
 const express = require('express')
-const mysql = require('mysql')
 const dotenv = require('dotenv')
+const jwt =  require('jsonwebtoken')
+const cors = require('cors')
 
-dotenv.config()
-
-
-const dbQueryAsync = require('./config/dbConfig')
+dotenv.config() //Habilita las viariables de entorno
 
 const productRouter = require('./router/productRouter')
 
 
 
-
-/* const {createProduct} = require('./services/products/serviceProduct') */
-
 const app = express()
 const PORT = process.env.PORT || 8081
 
+
+app.use(cors())
 app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 
+const secretKey = process.env.SECRET_KEY_JWT
+
 app.use('/api/products/', productRouter)
 
+const users = []
 
-
-
-/* mailerService.transport.sendMail(mail, (error, info) => {
-    if(error){
-        console.log('No se pudo enviar el mensaje')
+app.post('/register', (req, res) =>{
+    const {username, password} = req.body
+    if(users.find((user) => user.username === username)){
+        return res.status(400).json({message: 'Username is not available'})
     }
-    else{
-        console.log('mensaje enviado con exito')
-    }
+    const newUser = { username, password}
+    users.push(newUser)
+    res.status(201).json({message: 'User was created successfully!'})
 })
- */
 
-
-/* 
-app.get('/api/products/:pid', async (req, res) =>{
-    try{
-        
-        const query = `SELECT * FROM productos WHERE Id = (?)`
-        const {pid} = req.params
-        const result = await dbQueryAsync(query,[pid])
-        if(result.length == 0){
-            res.status(404).json({message: 'ERROR: Not found'})
-        }
-        else{
-            res.status(200).json({message: 'correcto', product: result[0]})
-        }
-       
+app.post('/login', (req, res) =>{
+    const {username, password} = req.body
+    const user = users.find(user => user.username == username && user.password == password)
+    if(!user){
+        return res.status(401).json({message: 'Invalid credentials'})
     }
-    catch(error){
-        console.error(error)
-        res.status(500).json({message: 'error'})
-    }
-}) */
+    const token = jwt.sign({username}, secretKey, {expiresIn: '1h'})
+    res.json({accessToken: token})
 
-/* app.get('/fulano/:id', (req, res) =>{
+})
 
-    const result = serviceProduct.getProductById()
-
-    const query = `SELECT * FROM productos WHERE Id = (?)`
-    db.query(query,[pid], (error, result)=>{
-        if(error){
-            res.status(500).json({message: 'error'})
-        }
-        else{
-            res.status(200).json({message: 'correcto', product: result[0]})
-        }
-    }) */
-
-  /*   if(!result){
-        res.status(500).json({message: 'Internal server error'})
-    }
-    res.status(200).json({product: product, status: 200, message: 'product found' }) */
-/* })
- */
 
 app.listen(PORT, () =>{
     console.log('El servidor se esta escuhando en http://localhost:' + PORT + '/')
