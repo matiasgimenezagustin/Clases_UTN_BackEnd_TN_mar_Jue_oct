@@ -24,13 +24,15 @@ app.use('/api/products/', productRouter)
 const users = []
 
 app.post('/register', (req, res) =>{
+    console.log(req.body)
     const {username, password} = req.body
+    console.log('hola')
     if(users.find((user) => user.username === username)){
-        return res.status(400).json({message: 'Username is not available'})
+        return res.status(400).json({message: 'Username is not available', status: 400})
     }
     const newUser = { username, password}
     users.push(newUser)
-    res.status(201).json({message: 'User was created successfully!'})
+    res.status(201).json({message: 'User was created successfully!', status: 201})
 })
 
 app.post('/login', (req, res) =>{
