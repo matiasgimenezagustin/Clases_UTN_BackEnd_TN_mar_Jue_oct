@@ -36,6 +36,7 @@ const postProductController = async (req, res) =>{
 
 const getAllProductsController = async (req, res) =>{
     const result = await getAllProducts()
+    
     if (!result){
         res.status(500).json({message: 'internal server error'})
     }

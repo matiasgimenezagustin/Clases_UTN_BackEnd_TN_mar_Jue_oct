@@ -23,7 +23,10 @@ const Register = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({username: formValues.username, password: formValues.password}),
-    }).then(res => res.json())
+    }).then(res =>{
+      console.log(res)
+      return res.json()
+    } )
     console.log('hola', response.status  )
     if(response.status == 201){
       navigate('/')

@@ -39,10 +39,10 @@ app.post('/login', (req, res) =>{
     const {username, password} = req.body
     const user = users.find(user => user.username == username && user.password == password)
     if(!user){
-        return res.status(401).json({message: 'Invalid credentials'})
+        return res.status(401).json({message: 'Invalid credentials', status: 401})
     }
     const token = jwt.sign({username}, secretKey, {expiresIn: '1h'})
-    res.json({accessToken: token})
+    res.status(200).json({accessToken: token, status: 200})
 
 })
 
