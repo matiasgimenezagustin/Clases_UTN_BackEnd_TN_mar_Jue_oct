@@ -6,6 +6,7 @@ const cors = require('cors')
 dotenv.config() //Habilita las viariables de entorno
 
 const productRouter = require('./router/productRouter')
+const authMiddleware = require('./middlewares/authMiddleware')
 
 
 
@@ -26,7 +27,7 @@ const users = []
 app.post('/register', (req, res) =>{
     console.log(req.body)
     const {username, password} = req.body
-    console.log('hola')
+
     if(users.find((user) => user.username === username)){
         return res.status(400).json({message: 'Username is not available', status: 400})
     }
@@ -44,6 +45,11 @@ app.post('/login', (req, res) =>{
     const token = jwt.sign({username}, secretKey, {expiresIn: '1h'})
     res.status(200).json({accessToken: token, status: 200})
 
+})
+
+
+app.post('/auth/verify', authMiddleware, (req, res) =>{
+    res.status(200).json({status:200, message: 'Valid token'})
 })
 
 

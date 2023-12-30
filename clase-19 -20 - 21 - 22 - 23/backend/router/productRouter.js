@@ -1,9 +1,10 @@
 const express = require('express')
 const { getProductByIdController, getAllProductsController, postProductController, deleteProductController} = require('../controllers/productController')
+const authMiddleware = require('../middlewares/authMiddleware')
 
 const productRouter = express.Router()
 
-productRouter.get('/', getAllProductsController)
+productRouter.get('/', authMiddleware, getAllProductsController)
 
 productRouter.post('/', postProductController )
 

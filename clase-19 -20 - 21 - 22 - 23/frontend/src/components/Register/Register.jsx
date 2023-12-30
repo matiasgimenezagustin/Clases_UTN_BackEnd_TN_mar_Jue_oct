@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { verifyToken } from '../../Helpers/verifyToken'
 
 const Register = () => {
+  
   /* const initialValues =  */
   const navigate = useNavigate()
+  verifyToken(navigate)
   const [formValues, setFormValues] = useState({username: '', password: ''})
   const [repeatUsername, setRepeatUsername] = useState(false)
   const handleChangeInput = (value, name) =>{

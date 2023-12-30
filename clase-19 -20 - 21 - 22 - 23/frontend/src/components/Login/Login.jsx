@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { verifyToken } from '../../Helpers/verifyToken'
+
+
 
 const Login = () => {
   const navigate = useNavigate()
   const initialValues = {username: '', password: ''}
   const [formValues, setFormValues] = useState(initialValues)
   const [invalidCredentials, setInvalidCredentials] = useState(false)
+
+ /*  setInterval(verificarToken, 60000 * 5 ) */
+
+   
+   
+  verifyToken()
 
   const handleChangeInput = (value, name)=>{
       console.log(name)
