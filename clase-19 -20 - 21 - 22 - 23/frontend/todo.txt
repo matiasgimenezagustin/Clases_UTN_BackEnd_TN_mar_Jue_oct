@@ -1,0 +1,17 @@
+-Agregar un Componente en la carpeta screen/components que se llame Product Detail, el cual no recibira props, va a tener un h1 que diga 'El detalle del producto: #'
+
+-Agregar la ruta /detail/:pid que tenga el parametro de busqueda :pid (EN EL FRONTEND)
+
+-En el componente Product Detail van agregar que se capture el valor del parametro de busqueda pid y se concatene al h1
+
+EJEMPLO:
+
+/detail/7
+
+<div>
+    <h1>Detalle del producto: # 7</h1>
+</div>
+
+-Cambiar el Button ver detalle del Home.jsx por un Link que redireccione al '/detail/' + product.id
+
+
