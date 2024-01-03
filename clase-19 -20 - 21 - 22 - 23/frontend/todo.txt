@@ -15,3 +15,23 @@ EJEMPLO:
 -Cambiar el Button ver detalle del Home.jsx por un Link que redireccione al '/detail/' + product.id
 
 
+2da parte)
+
+BACKEND:
+
+-Vamos a agregar el authMiddlewere a la ruta /api/products/:pid
+
+FRONTEND:
+
+-Vamos a hacer un fetch en ProductDetail que va a ser hacia la ruta GET /api/products/:pid pasando por headers la authentificacion. Este fetch debera traerte el producto o en su defecto un error 404 not found. En caso de error mostrar en el h1 producto no encontrado
+
+En caso de estar el producto vamos a mostrar el h1 con el id y aldado del id el nombre 
+
+Abajo en un span el precio
+
+Abajo en otro span el stock
+
+Abajo en un parrafo la descripcion
+
+-Agregar un Loader que diga cargando cuando se envia el fetch y una vez resuelto que muestre lo anterior mencionado.
+

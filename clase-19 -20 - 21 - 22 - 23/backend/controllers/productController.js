@@ -13,7 +13,7 @@ const getProductByIdController = async (req, res) =>{
         res.status(404).json({message: 'ERROR: Not found'})
     }
     else{
-        res.status(200).json({message: 'correcto', product: result[0]})
+        res.status(200).json({message: 'correcto', product: result})
     }
     
 }

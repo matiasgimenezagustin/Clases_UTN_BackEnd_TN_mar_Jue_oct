@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+
 
 const Home = () => {
+    const {pid} = useParams()
     const [products, setProducts] = useState([])
     const navigate = useNavigate()
     useEffect( () =>{
@@ -27,7 +29,7 @@ const Home = () => {
         <div>
         <h1>Lista de productos</h1>
         {products.length == 0 ? <h2>Cargando...</h2> : products.map(product =>
-            <Product key={product.id} {...product}/>
+            <Product key={product.id} {...product} />
         )}
     </div>
   )
@@ -44,7 +46,7 @@ const Product = ({nombre, precio, stock, id}) =>{
             <p>Precio {precio}</p>
             <span>Stock: {stock}</span>
             <br/>
-            <button>Ver Detalle </button>
+            <Link to={'/detail/' + id}>Ver Detalle </Link>
         </div>
     )
 }
