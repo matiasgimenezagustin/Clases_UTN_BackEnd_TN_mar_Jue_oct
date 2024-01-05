@@ -35,3 +35,21 @@ Abajo en un parrafo la descripcion
 
 -Agregar un Loader que diga cargando cuando se envia el fetch y una vez resuelto que muestre lo anterior mencionado.
 
+
+3era parte)
+
+-En el product detail deberan crear un boton eliminar producto.
+
+Cuando le demos click al boton debera aparecer un modal preguntando si estamos seguros de esa accion. 
+
+en caso de dar no debera cancelar el modal
+
+en caso de dar al si, debera enviar un fetch DELETE /api/product/:pid
+
+El pid debera reemplazarse por el id del producto a eliminar
+
+
+-Cuando se envie de la respuesta a partir del status debera redireccionar con navigate a la ruta home, si fallo la eliminacion del producto debera aparecer una alert (puede ser un alert, un sweet alert o un toastify Ver doc de las liberias:
+https://www.npmjs.com/package/react-toastify
+https://sweetalert2.github.io/
+)
